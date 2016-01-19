@@ -1,0 +1,337 @@
+playing = True #playing condition
+pieces = { "Aircraft Carrier" : 5, "Battleship" : 4, "Submarine" : 3, "Cruiser" : 3, "Destroyer" : 2}
+
+#sets up a 10 X 10 board with all coordinates labeled
+def setup_board(board):
+	for x in range(11):
+		board.append(["O"] * 11)
+	board[0][0] = "  "
+	for x in range(10):
+		board[0][x + 1] = chr(ord('a') + x)
+	for x in range(9):
+		board[x + 1][0] = str(x + 1) + " "
+	board[10][0] = str(10)
+
+#prints board seperated by spaces
+def print_board(board):
+	for row in board:
+		print "  ".join(row)
+
+#translate char back to int
+def translate(coord):
+	num = 1
+	for alpha in "abcdefghij":
+		if alpha == coord:
+			coord = num
+		else:
+			num += 1
+	return int(coord)
+
+#function to check and converts coordinate
+def coord_check(coord):
+	for coord_num in range(1,11):
+		if coord_num == coord:
+			return 0
+
+#fuction places the ship piece on the board
+def overlap_piece(board, x_front, y_front, x_back, y_back):
+	x_front = int(x_front)
+	y_front = int(y_front)
+	x_back = int(x_back)
+	x_back = int(x_back)
+		if x_front == x_back:
+			if y_front > y_back:
+				for x in range(y_back, y_front + 1):
+					if board[x][x_front] == '*':
+						return 0
+			else:
+				for x in range(y_front, y_back + 1):
+					if board[x][x_front] == '*':
+						return 0
+		else:
+			if x_front > x_back:
+				for x in range(x_back, x_front + 1):
+					if board[y_front][x] == '*':
+						return 0
+			else:
+				for x in range(x_front, x_back + 1):
+					if board[y_front][x] == '*':
+						return 0
+
+def place_piece(board, x_front, y_front, x_back, y_back):
+	x_front = int(x_front)
+	y_front = int(y_front)
+	x_back = int(x_back)
+	x_back = int(x_back)
+	if x_front == x_back:
+		if y_front > y_back:
+			for x in range(y_back, y_front + 1):
+				board[x][x_front] = '*'
+		else:
+			for x in range(y_front, y_back + 1):
+				board[x][x_front] = '*'
+	else:
+		if x_front > x_back:
+			for x in range(x_back, x_front + 1):
+				board[y_front][x] = '*'
+		else:
+			for x in range(x_front, x_back + 1):
+				board[y_front][x] = '*'
+
+def place_attack(board, guess_board, x, y):
+	x = int(x)
+	y = int(y)
+	board[y][x] = "x"
+	guess_board[y][x] = "x"
+	
+def check_winner(board):
+	for x in range(10):
+		for y in range(10):
+			if board[x + 1][y + 1] == "*":
+				return 0
+
+#Into of game.
+print "Welcome to Battleship"
+player_1 = raw_input("Player 1, please input your name:")
+player_2 = raw_input("Player 2, please input your name:")
+while playing == True:
+	print "Let's play Battleship!"
+	board_p1 = [] #game board in list form
+	board_p2 = [] #second game board
+	setup_board(board_p1)
+	setup_board(board_p2)
+	print "%s's board" % (player_1)
+	print_board(board_p1)
+	print "%s, you will place your pieces on the board first. Tell %s to look away." % (player_1, player_2)
+	#player 1 placing pieces on the board
+	for ship in pieces:
+		print "Please place your %s, it takes up %s coordinates" % (ship, pieces[ship])
+		overlap_check = True
+		while overlap_check == True:
+			#Front X-coordinate
+			check_xf = False
+			while check_xf == False:
+				x_coord_front = raw_input("X coordinate for front:")
+				x_coord_front = translate(x_coord_front)
+				check_xf = coord_check(x_coord_front)
+				if check_xf == 0:
+					check_xf = True
+				else:
+					check_xf = False
+					print "Coordinates are not on the map try again"
+			#Front Y-coordinate        
+			check_yf = False
+			while check_yf == False:
+				y_coord_front = raw_input("Y coordinate for front:")
+                        y_coord_front = translate(y_coord_front)
+                        check_yf = coord_check(y_coord_front)
+                        if check_yf == 0:
+                            check_yf = True
+                        else:
+                            check_yf = False
+                            print "Coordinates are not on the map try again"
+                    #loops till correct ship length
+                    dist_check = False
+                    while dist_check == False:
+                        #Back X-coordinate
+                        check_bx = False
+                        while check_bx == False:
+                            x_coord_back = raw_input("X coordinate for back:")
+                            x_coord_back = translate(x_coord_back)
+                            check_bx = coord_check(x_coord_back)
+                            if check_bx == 0:
+                                check_bx = True
+                            else:
+                                check_bx = False
+                                print "Coordinates are not on the map try again"
+                        #Back Y-coordinate
+                        check_by = False
+                        while check_by == False:
+                            y_coord_back = raw_input("Y coordinate for back:")
+                            y_coord_back = translate(y_coord_back)
+                            check_by = coord_check(y_coord_back)
+                            if check_by == 0:
+                                check_by = True
+                            else:
+                                check_by = False
+                                print "Coordinates are not on the map try again"
+                        #Funtion to check distance
+                        if abs(x_coord_back - x_coord_front) == pieces[ship] - 1 or abs(y_coord_back - y_coord_front) == pieces[ship] - 1:
+                            dist_check = True
+                        else:
+                            print "This placement makes the size of your ship incorrect. Try again."
+                        overlap_check = overlap_piece(board_p1, x_coord_front, y_coord_front, x_coord_back, y_coord_back)
+                        if overlap_check == 0:
+                            overlap_check = True
+                            print "You can't put a ship on top of another. Try again."
+                        else:
+                            overlap_check = False
+                #adding piece on board
+                place_piece(board_p1, x_coord_front, y_coord_front, x_coord_back, y_coord_back)
+                print "%s's board" % (player_1)
+                print_board(board_p1)
+            print "%s's board" % (player_2)
+            print_board(board_p2)    
+            #player 2 placing pieces on the board
+            print "%s, it is your turn now. Tell %s to look away." % (player_2, player_1)
+            for ship in pieces:
+                print "Please place your %s, it takes up %s coordinates" % (ship, pieces[ship])
+                overlap_check = True
+                while overlap_check == True:
+                #Front X-coordinate
+                    check_xf = False
+                    while check_xf == False:
+                        x_coord_front = raw_input("X coordinate for front:")
+                        x_coord_front = translate(x_coord_front)
+                        check_xf = coord_check(x_coord_front)
+                        if check_xf == 0:
+                            check_xf = True
+                        else:
+                            check_xf = False
+                            print "Coordinates are not on the map try again"
+                    #Front Y-coordinate        
+                    check_yf = False
+                    while check_yf == False:
+                        y_coord_front = raw_input("Y coordinate for front:")
+                        y_coord_front = translate(y_coord_front)
+                        check_yf = coord_check(y_coord_front)
+                        if check_yf == 0:
+                            check_yf = True
+                        else:
+                            check_yf = False
+                            print "Coordinates are not on the map try again"
+                    #loops till correct ship length
+                    dist_check = False
+                    while dist_check == False:
+                        #Back X-coordinate
+                        check_bx = False
+                        while check_bx == False:
+                            x_coord_back = raw_input("X coordinate for back:")
+                            x_coord_back = translate(x_coord_back)
+                            check_bx = coord_check(x_coord_back)
+                            if check_bx == 0:
+                                check_bx = True
+                            else:
+                                check_bx = False
+                                print "Coordinates are not on the map try again"
+                        #Back Y-coordinate
+                        check_by = False
+                        while check_by == False:
+                            y_coord_back = raw_input("Y coordinate for back:")
+                            y_coord_back = translate(y_coord_back)
+                            check_by = coord_check(y_coord_back)
+                            if check_by == 0:
+                                check_by = True
+                            else:
+                                check_by = False
+                                print "Coordinates are not on the map try again"
+                        #Funtion to check distance
+                        if abs(x_coord_back - x_coord_front) == pieces[ship] - 1 or abs(y_coord_back - y_coord_front) == pieces[ship] - 1:
+                            dist_check = True
+                        else:
+                            print "This placement makes the size of your ship incorrect. Try again."
+                        overlap_check = overlap_piece(board_p2, x_coord_front, y_coord_front, x_coord_back, y_coord_back)
+                        if overlap_check == 0:
+                            overlap_check = True
+                            print "You can't put a ship on top of another. Try again."
+                        else:
+                            overlap_check = False
+                #adding piece on board
+                place_piece(board_p2, x_coord_front, y_coord_front, x_coord_back, y_coord_back)
+                print "%s's board" % (player_2)
+                print_board(board_p2)
+            guess_p1 = [] #game board in list form
+            guess_p2 = [] #second game board
+            setup_board(guess_p1)
+            setup_board(guess_p2)
+            print "%s, you will go first." % (player_1)
+            #gameplay starts here
+            winner = False
+            while winner == False:
+                print_board(guess_p1)
+                print "%s, input your coordinates." % (player_1)
+                overlap_check = True
+                while overlap_check == True:
+                    check_x = False
+                    while check_x == False:
+                        guess_x = raw_input("x coordinates:")
+                        guess_x = translate(guess_x)
+                        check_x = coord_check(guess_x)
+                        if check_x == 0:
+                            check_x = True
+                        else:
+                            check_x = False
+                            print "Coordinates are not on the map try again"
+                    check_y = False
+                    while check_y == False:
+                        guess_y = raw_input("y coordinates:")
+                        guess_y = translate(guess_y)
+                        check_y = coord_check(guess_y)
+                        if check_y == 0:
+                            check_y = True
+                        else:
+                            check_y = False
+                            print "Coordinates are not on the map try again"
+                    if guess_p1[guess_y][guess_x] == "x":
+                        print "You already guessed this spot. Try again"
+                    else:
+                        overlap_check = False
+                if board_p2[guess_y][guess_x] == "*":
+                    print "You hit something!"
+                else:
+                    print "Sorry, You miss."
+                place_attack(board_p2, guess_p1, guess_x, guess_y)
+                win_game = check_winner(board_p2)
+                if win_game != 0:
+                    print "You sunk all the battle ships. You win!"
+                    break
+                print "It is %s's turn" % (player_2)
+                print_board(guess_p2)
+                print "%s, input your coordinates." % (player_2)
+                overlap_check = True
+                while overlap_check == True:
+                    check_x = False
+                    while check_x == False:
+                        guess_x = raw_input("x coordinates:")
+                        guess_x = translate(guess_x)
+                        check_x = coord_check(guess_x)
+                        if check_x == 0:
+                            check_x = True
+                        else:
+                            check_x = False
+                            print "Coordinates are not on the map try again"
+                    check_y = False
+                    while check_y == False:
+                        guess_y = raw_input("y coordinates:")
+                        guess_y = translate(guess_y)
+                        check_y = coord_check(guess_y)
+                        if check_y == 0:
+                            check_y = True
+                        else:
+                            check_y = False
+                            print "Coordinates are not on the map try again"
+                    if guess_p2[guess_y][guess_x] == "x":
+                        print "You already guessed this spot. Try again"
+                    else:
+                        overlap_check = False
+                if board_p1[guess_y][guess_x] == "*":
+                    print "You hit something!"
+                else:
+                    print "Sorry, You miss."
+                place_attack(board_p1, guess_p2, guess_x, guess_y)
+                win_game = check_winner(board_p1)
+                if win_game != 0:
+                    print "You sunk all the battle ships."
+                    break
+                print "It is %s's turn" % (player_1)
+        check = False
+        while check == False:
+            play_again = raw_input("Would you like to play again?(y,n)")
+            if play_again == 'n':
+                playing = False
+                check = True
+            elif play_again == 'y':
+                playing = True
+                check = True
+            else:
+                print "Input was invalid. Try Again"
