@@ -176,9 +176,9 @@ while playing == True:
 			while check_fx == False:
 				x_coord_front = raw_input("X coordinate for front:")
 				for alpha in "abcdefghij":
-					 if x_coord_front == alpha:
-					check_fx = True
-					x_coord_front = translate(x_coord_front)
+					if x_coord_front == alpha:
+						check_fx = True
+						x_coord_front = translate(x_coord_front)
 				if check_fx == False:
 					print "Your input is invalid. Try again."
 			#The y coordinate or row for the front end of the ship 
