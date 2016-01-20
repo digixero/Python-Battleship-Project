@@ -7,3 +7,5 @@ Improvements still needed
 	4) Upgrade from Python 2.X to Python 3.X
 Feedback and suggestions appreicated
 	email: ericli148@gmail.com
+
+Copyrighted by Eric Li
