@@ -121,10 +121,11 @@ while playing == True:
 			#The y coordinate or row for the front end of the ship        
 			check_fy = False
 			while check_fy == False:
-				y_coord_front = int(raw_input("Y coordinate for front:"))
+				y_coord_front = raw_input("Y coordinate for front:")
 				for num in range(1,11):
-				    if y_coord_front == num:
+				    if y_coord_front == str(num):
 				        check_fy = True
+				        y_coord_front = int(y_coord_front)
 				if check_fy == False:
 				    print "Your input is invalid. Try again."
 			#loops till ship length is correct
@@ -143,10 +144,11 @@ while playing == True:
 				#The y coordinate or row for the front back of the ship 
 				check_by = False
 				while check_by == False:
-					y_coord_back = int(raw_input("Y coordinate for back:"))
+					y_coord_back = raw_input("Y coordinate for back:")
 					for num in range(1,11):
-						if y_coord_back == num:
+						if y_coord_back == str(num):
 							check_by = True
+							y_coord_back = int(y_coord_back)
 					if check_by == False:
 						print "Your input is invalid. Try again."
 				#ship length checker
@@ -186,8 +188,9 @@ while playing == True:
 			while check_fy == False:
 				y_coord_front = raw_input("Y coordinate for front:")
 				for num in range(1,11):
-					if y_coord_front == num:
+					if y_coord_front == str(num):
 						check_fy = True
+						y_coord_front = int(y_coord_front)
 				if check_fy == False:
 					print "Your input is invalid. Try again."
 			#loops till ship length is correct
@@ -208,8 +211,9 @@ while playing == True:
 				while check_by == False:
 					y_coord_back = raw_input("Y coordinate for back:")
 					for num in range(1,11):
-						if y_coord_back == num:
+						if y_coord_back == str(num):
 							check_by = True
+							y_coord_back = int(y_coord_back)
 					if check_by == False:
 						print "Your input is invalid. Try again."
 				#ship length checker
@@ -252,8 +256,9 @@ while playing == True:
 			while check_y == False:
 				guess_y = raw_input("y coordinates:")
 				for num in range(1,11):
-					if guess_y == num:
+					if guess_y == str(num):
 						check_y = True
+						guess_y = int(guess_y)
 				if check_y == False:
 					print "Your input is invalid. Try again."
 			#checker to ID if user has guessed the spot
@@ -290,8 +295,9 @@ while playing == True:
 			while check_y == False:
 				guess_y = raw_input("y coordinates:")
 				for num in range(1,11):
-					if guess_y == num:
+					if guess_y == str(num):
 						check_y = True
+						guess_y = int(guess_y)
 				if check_y == False:
 					print "Your input is invalid. Try again."
 			if guess_p2[guess_y][guess_x] == "x":
