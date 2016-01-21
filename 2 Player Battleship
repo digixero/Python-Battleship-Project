@@ -18,7 +18,7 @@ def setup_board(board):
 
 def print_board(board, player):
 	"""Prints the playing board"""
-	print("%s's board" % (player))
+	print("\t%s's board" % (player))
 	for row in board:
 		print("  ".join(row))
 
@@ -317,7 +317,7 @@ while playing == True:
 			score_p2 += 1
 			break
 		print("It is %s's turn" % (player_1))
-	print("Score \n %s: %s \n %s: %s" % (player_1, score_p1, player_2, score_p2))
+	print("Score \n%s: %s \n%s: %s" % (player_1, score_p1, player_2, score_p2))
 	#checker to see if players wish to play again.
 	check = False
 	while check == False:
