@@ -10,9 +10,8 @@ def setup_board(board):
 	board[0][0] = "  "
 	for x in range(10):
 		board[0][x + 1] = chr(ord('a') + x)
-	for x in range(9):
+	for x in range(10):
 		board[x + 1][0] = str(x + 1) + " "
-	board[10][0] = str(10)
 
 #prints board seperated by spaces
 def print_board(board, player):
@@ -122,8 +121,8 @@ while playing == True:
 			check_fy = False
 			while check_fy == False:
 				y_coord_front = raw_input("Y coordinate for front:")
-				for num in range(1,11):
-				    if y_coord_front == str(num):
+				for num in range(10):
+				    if y_coord_front == str(num + 1):
 				        check_fy = True
 				        y_coord_front = int(y_coord_front)
 				if check_fy == False:
@@ -145,8 +144,8 @@ while playing == True:
 				check_by = False
 				while check_by == False:
 					y_coord_back = raw_input("Y coordinate for back:")
-					for num in range(1,11):
-						if y_coord_back == str(num):
+					for num in range(10):
+						if y_coord_back == str(num + 1):
 							check_by = True
 							y_coord_back = int(y_coord_back)
 					if check_by == False:
@@ -187,8 +186,8 @@ while playing == True:
 			check_fy = False
 			while check_fy == False:
 				y_coord_front = raw_input("Y coordinate for front:")
-				for num in range(1,11):
-					if y_coord_front == str(num):
+				for num in range(10):
+					if y_coord_front == str(num + 1):
 						check_fy = True
 						y_coord_front = int(y_coord_front)
 				if check_fy == False:
@@ -210,8 +209,8 @@ while playing == True:
 				check_by = False
 				while check_by == False:
 					y_coord_back = raw_input("Y coordinate for back:")
-					for num in range(1,11):
-						if y_coord_back == str(num):
+					for num in range(10):
+						if y_coord_back == str(num + 1):
 							check_by = True
 							y_coord_back = int(y_coord_back)
 					if check_by == False:
@@ -255,8 +254,8 @@ while playing == True:
 			check_y = False
 			while check_y == False:
 				guess_y = raw_input("y coordinates:")
-				for num in range(1,11):
-					if guess_y == str(num):
+				for num in range(10):
+					if guess_y == str(num + 1):
 						check_y = True
 						guess_y = int(guess_y)
 				if check_y == False:
@@ -294,8 +293,8 @@ while playing == True:
 			check_y = False
 			while check_y == False:
 				guess_y = raw_input("y coordinates:")
-				for num in range(1,11):
-					if guess_y == str(num):
+				for num in range(10):
+					if guess_y == str(num + 1):
 						check_y = True
 						guess_y = int(guess_y)
 				if check_y == False:
